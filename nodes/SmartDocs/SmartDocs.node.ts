@@ -116,11 +116,6 @@ export class SmartDocs implements INodeType {
 					returnData.push(await downloadToBinary.call(this, targets, i));
 					continue;
 				}
-				if (wantsBinary && resource === 'template' && (operation === 'previewRender' || operation === 'previewDraft')) {
-					// preview endpoints return PDF bytes directly; responseData is the buffer
-					returnData.push({ json: {}, binary: { data: await this.helpers.prepareBinaryData(Buffer.from(responseData as Buffer), 'preview.pdf') }, pairedItem: i });
-					continue;
-				}
 
 				const executionData = this.helpers.constructExecutionMetaData(
 					this.helpers.returnJsonArray(responseData as IDataObject[]),
@@ -210,8 +205,8 @@ async function executeTemplate(this: IExecuteFunctions, operation: string, i: nu
 	if (operation === 'archive') return smartDocsApiRequest.call(this, 'POST', `/templates/${id}/archive`);
 	if (operation === 'unarchive') return smartDocsApiRequest.call(this, 'POST', `/templates/${id}/unarchive`);
 	if (operation === 'updateDraft') return smartDocsApiRequest.call(this, 'PATCH', `/templates/${id}/draft`, jsonParse(this.getNodeParameter('definition', i) as string) as IDataObject);
-	if (operation === 'previewRender') return smartDocsApiRequest.call(this, 'POST', `/templates/${id}/preview-render`, { data: jsonParse(this.getNodeParameter('renderData', i) as string) as IDataObject }, undefined, { encoding: 'arraybuffer', json: false });
-	if (operation === 'previewDraft') return smartDocsApiRequest.call(this, 'POST', `/templates/${id}/preview-draft`, jsonParse(this.getNodeParameter('draftPreview', i) as string) as IDataObject, undefined, { encoding: 'arraybuffer', json: false });
+	if (operation === 'previewRender') return smartDocsApiRequest.call(this, 'POST', `/templates/${id}/preview-render`, { data: jsonParse(this.getNodeParameter('renderData', i) as string) as IDataObject });
+	if (operation === 'previewDraft') return smartDocsApiRequest.call(this, 'POST', `/templates/${id}/preview-draft`, jsonParse(this.getNodeParameter('draftPreview', i) as string) as IDataObject);
 
 	if (operation === 'startSigning' || operation === 'kioskSession') {
 		const extra = this.getNodeParameter('startFields', i, {}) as IDataObject;

@@ -150,16 +150,6 @@ export const templateFields: INodeProperties[] = [
 			'Body for draft preview: { "html": "...", "css": "...", "sampleData": {}, "page": {} }. html is required.',
 		displayOptions: { show: { resource: ['template'], operation: ['previewDraft'] } },
 	},
-	{
-		displayName: 'Download PDF',
-		name: 'download',
-		type: 'boolean',
-		default: true,
-		description: 'Whether to return the rendered PDF as binary data',
-		displayOptions: {
-			show: { resource: ['template'], operation: ['previewRender', 'previewDraft'] },
-		},
-	},
 	// Get Many
 	{
 		displayName: 'Return All',
