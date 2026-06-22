@@ -8,7 +8,7 @@
   "author": { "name": "Ahmet Zambak" },
   "repository": { "type": "git", "url": "git+https://github.com/ahmetzambak/n8n-nodes-smartdocs.git" },
   "engines": { "node": ">=20" },
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "npx rimraf dist && tsc && gulp build:icons",
     "dev": "tsc --watch",
